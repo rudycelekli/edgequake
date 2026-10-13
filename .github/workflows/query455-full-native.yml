@@ -1,5 +1,7 @@
 name: Reviewer-requested edgequake-query full crate verification
 'on':
+  push:
+    branches: [validation/query455-full-native-20261013]
   workflow_dispatch: {}
 permissions:
   contents: read
