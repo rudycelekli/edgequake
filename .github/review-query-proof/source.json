@@ -1,0 +1,18 @@
+{
+  "repo": "rudycelekli/edgequake",
+  "upstream": "raphaelmansuy/edgequake",
+  "pr": 455,
+  "head": "72e84a2e941ca6075148109ba449c32ec25cdc48",
+  "tree": "e703c21e7c78d78d500503d51e37a2bbb081b8d3",
+  "sha256": {
+    "edgequake/Cargo.toml": "8350a0f473c0639ded28f6924789457723d160267e12a5a66f696680104ad5eb",
+    "edgequake/Cargo.lock": "91379eb09510cea144dfc4df504335481950d1420d88b510972de4a3a8affbee",
+    "edgequake/rust-toolchain.toml": "d948fa2dd7e11bfa4e9bc9f0015af5d5ecc575e9ecb555798c6127030d6abee6",
+    "edgequake/crates/edgequake-query/Cargo.toml": "50a50b622d1b69f7cf0e99f174ac9e0dc7c35f792e53a89f1ee08f983f27c956",
+    "edgequake/crates/edgequake-query/src/grounding.rs": "1c4c7f47eeeccb26f7ecb1878c2f4144d2b9a59010ac2b88674658b422a7705c"
+  },
+  "scope": "Entire current default-feature edgequake-query cargo test including unit,integration anddocumentation tests. Existing ignored live-provider/DB tests remain ignored, no sourcehelperreplacement or testfilter.",
+  "requestedCommand": "cargo test -p edgequake-query",
+  "executedCommand": "cargo test --locked -p edgequake-query",
+  "toolchain": "1.95.0 exact declared Rust pin; prior local1.98.1 stoppedbefore tests retained separately."
+}

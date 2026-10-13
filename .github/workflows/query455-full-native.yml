@@ -1,0 +1,51 @@
+name: Reviewer-requested edgequake-query full crate verification
+'on':
+  workflow_dispatch: {}
+permissions:
+  contents: read
+concurrency:
+  group: query455-full-native-20261013
+  cancel-in-progress: false
+jobs:
+  full-crate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      CARGO_TERM_COLOR: never
+      CARGO_INCREMENTAL: '0'
+      CARGO_BUILD_JOBS: '2'
+      CARGO_REGISTRIES_CRATES_IO_PROTOCOL: sparse
+      CARGO_PROFILE_DEV_DEBUG: '0'
+      CARGO_PROFILE_TEST_DEBUG: '0'
+      RUST_MIN_STACK: '16777216'
+      RUST_LOG: warn
+      EDGEQUAKE_PERF_REAL_LLM: '0'
+      DATABASE_URL: ''
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: 72e84a2e941ca6075148109ba449c32ec25cdc48
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          path: .query455-proof
+          sparse-checkout: .github/review-query-proof
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@e2a55d2ffb04f378e9626c28d38b36d230d1e12f
+        with:
+          toolchain: 1.95.0
+      - name: Test fail-closed receipt evaluator controls
+        run: python3 .query455-proof/.github/review-query-proof/verify.py --self-test
+      - name: Actual complete default-feature crate tests and doctests
+        env:
+          PROOF_DIR: ${{ runner.temp }}/query455-native-evidence
+        run: python3 .query455-proof/.github/review-query-proof/verify.py
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: query455-full-native-evidence
+          path: ${{ runner.temp }}/query455-native-evidence/
+          retention-days: 14
